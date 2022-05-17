@@ -1,0 +1,930 @@
+---
+title: "Growth of the UVA Statistics Department"
+output: 
+  html_document:
+    toc: TRUE
+    theme: cerulean
+    toc_float: TRUE
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+```
+
+# Brittany Nguyen and Richard Ross PhD  
+
+# Abstract 
+Departments and their respective majors at the University of Virginia grow and shrink over the course of time, whether it be a span of a few years or  several decades.  The goal of this project is to understand such changes, especially as they pertain to the Interdisciplinary Statistics major and the Statistics department as a whole.  When compared to similar departments at the university, it is evident that the Statistics department has shown larger and more sustained growth over the past decade.
+
+The Interdisciplinary Statistics major has grown significantly since 2012, rising from a total of 22 degrees awarded in 2012-2013 to 203 degrees in 2019-2020.  Currently however, there is little documentation of these increases.  This project aims to analyze the department's growth in three ways: the number of bachelor's degrees awarded annually, course enrollment totals, and the student to faculty ratio.  These three aspects of growth will communicate the large-scale changes observed in the UVA Statistics department.
+
+About notation: "STAT" is used in the following graphs of the report to refer to the Interdisciplinary Statistics major, offering Bachelor of Arts (B.A.) degrees.  "MATH" is used to refer to the Mathematics major, offering Bachelor of Arts (B.A.) degrees.  "ECON" refers to the Economics major, offering Bachelor of Arts (B.A.) degrees. Finally, "CS_BA" refers to the Interdisciplinary Computer Science major of the College of Arts and Sciences, offering Bachelor of Arts (B.A.) degrees.  "CS_BS" refers to the Computer Science major of the School of Engineering and Applied Sciences, offering Bachelor of Science (B.S.) degrees.
+
+
+
+# Growth of Majors (Degree Growth)
+
+```{r, include=FALSE}
+#load ggplot
+#install.packages("ggplot2")
+library(ggplot2)
+
+#install.packages("knitr")
+library(knitr)
+
+#install.packages("dplyr")
+library(dplyr)
+```
+
+
+```{r, include=FALSE}
+# Student Growth 
+
+## Statistics Department Bachelor's Degrees Awarded in College and Graduate School of Arts & Sciences
+
+###Interdisciplinary Statistics Major Bachelor's
+bachelors<-c(22,41,60,93,96,98,149,203)
+years<-c('2013','2014','2015','2016','2017','2018','2019','2020')
+Department<-c('Stats','Stats','Stats','Stats','Stats','Stats','Stats','Stats')
+stat_degrees<-data.frame(years,bachelors, Department)
+#stat_degrees
+stat_plot<-ggplot(stat_degrees,aes(x=years,y=bachelors, group=1))+geom_point()+geom_line(color='orange')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title="Statistics Bachelor's Degrees Awarded (College & Grad Level)",x='Year of Graduation',y="Bachelor's Degrees Awarded")
+
+#stat_plot
+```
+
+
+
+```{r, echo=FALSE}
+# ####Sampling Stats (for the above Statistics Majors Data):
+# range_stats<-max(bachelors)-min(bachelors) 
+# mean_stats<-mean(bachelors)
+# median_stats<-median(bachelors)
+# data.frame(range_stats,mean_stats,median_stats) #comprehensive data frame
+
+```
+
+
+
+
+```{r, include=FALSE}
+## Math Department Bachelors Degrees Awarded in College and Graduate School of Arts & Sciences
+
+###Math Major Bachelors
+bachelors<-c(87,98,110,117,107,108,122,114)
+years<-c('2013','2014','2015','2016','2017','2018','2019','2020')
+Department<-c('Math','Math','Math','Math','Math','Math','Math','Math')
+math_degrees<-data.frame(years,bachelors, Department)
+math_degrees
+math_plot<-ggplot(math_degrees,aes(x=years,y=bachelors, group=1))+geom_point()+geom_line(color='orange')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title="Math Bachelor's Degrees Awarded (College & Grad Level)",x='Year of Graduation',y="Bachelor's Degrees Awarded")
+
+#math_plot
+```
+
+
+
+```{r, echo=FALSE}
+# ####Sampling Stats (for the above Math Majors Data):
+# range_math<-max(bachelors)-min(bachelors) 
+# mean_math<-mean(bachelors) 
+# median_math<-median(bachelors) 
+# data.frame(range_math,mean_math,median_math) #comprehensive data frame
+# 
+# The range for bachelors degrees awarded is only 35, which indicates a small spread and variation of the number of degrees awarded in the Math department over time. This can be contrasted with the large range of 181 observed in the Statistics department over the same period of time.
+
+```
+
+
+
+
+
+```{r, include=FALSE}
+## Computer Science Department Bachelors Degrees Awarded (in the School of Engineering and Applied Sciences)
+
+###Computer Science (within Engineering School) Major Bachelors 
+bachelors<-c(78,83,124,106,139,140,174,187)
+years<-c('2013','2014','2015','2016','2017','2018','2019','2020')
+Department<-c('CS_BS','CS_BS','CS_BS','CS_BS','CS_BS','CS_BS','CS_BS','CS_BS')
+cs_degrees<-data.frame(years,bachelors, Department)
+cs_degrees
+cs_plot<-ggplot(cs_degrees,aes(x=years,y=bachelors, group=1))+geom_point()+geom_line(color='orange')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title="CS BS Bachelor's Degrees Awarded',x='Year of Graduation",y="Bachelor's Degrees Awarded")
+
+#cs_plot
+```
+
+
+
+```{r, echo=FALSE}
+# ####Sampling Stats (for the above Computer Science Majors (Engineering School) Data):
+# range_cs<-max(bachelors)-min(bachelors) 
+# mean_cs<-mean(bachelors) 
+# median_cs<-median(bachelors) 
+# data.frame(range_cs,mean_cs,median_cs) #comprehensive data frame
+# 
+# The range for the CS department within the School of Engineering is large, at approximately 109. 
+# Comparative to the 181 range for the Statistics department however, this variation over time is smaller.
+```
+
+
+
+```{r, include=FALSE}
+## Computer Science Department Bachelors Degrees Awarded (in the College of Arts and Sciences)
+
+###Interdisciplinary Computer Science (within College of Arts and Sciences) Major Bachelors 
+bachelors<-c(58,99,122,117,133,177,205,250)
+years<-c('2013','2014','2015','2016','2017','2018','2019','2020')
+Department<-c('CS_BA','CS_BA','CS_BA','CS_BA','CS_BA','CS_BA','CS_BA','CS_BA')
+cs_college_degrees<-data.frame(years,bachelors, Department)
+cs_college_degrees
+cs_clas_plot<-ggplot(cs_college_degrees,aes(x=years,y=bachelors, group=1))+geom_point()+geom_line(color='orange')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title="CS BA Bachelor's Degrees Awarded (CLAS)",x='Year of Graduation',y="Bachelor's Degrees Awarded")
+
+#cs_clas_plot
+```
+
+
+
+```{r, echo=FALSE}
+# ####Sampling Stats (for the above Computer Science Majors (CLAS) Data):
+# range_cs_clas<-max(bachelors)-min(bachelors) 
+# mean_cs_clas<-mean(bachelors) 
+# median_cs_clas<-median(bachelors) 
+# data.frame(range_cs_clas,mean_cs_clas,median_cs_clas) #comprehensive data frame
+# 
+# 
+# The range for the CS department within the College of Arts and Sciences is large, at 192 degrees. This is comparable to the 181 degree range observed for the Statistics department, and indicates that both departments within the CLAS have experienced large expansion during the time period observed.
+```
+
+
+
+
+
+
+```{r, include=FALSE}
+## Economics Department Bachelors Degrees Awarded
+
+###Economics Major Bachelors
+bachelors<-c(312,375,386,441,425,399,485,511)
+years<-c('2013','2014','2015','2016','2017','2018','2019','2020')
+Department<-c('Econ','Econ','Econ','Econ','Econ','Econ','Econ','Econ')
+econ_degrees<-data.frame(years,bachelors,Department)
+econ_degrees
+econ_plot<-ggplot(econ_degrees,aes(x=years,y=bachelors,group=1))+geom_point()+geom_line(color='orange')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title="Econ Bachelor's Degrees Awarded",x='Year of Graduation',y="Bachelor's Degrees Awarded")
+
+#econ_plot
+```
+
+
+
+```{r, echo=FALSE}
+# ####Sampling Stats (for the above Economics Majors data):
+# range_econ<-max(bachelors)-min(bachelors) 
+# mean_econ<-mean(bachelors) 
+# median_econ<-median(bachelors) 
+# data.frame(range_econ,mean_econ,median_econ) #comprehensive data frame
+# 
+# 
+# The range for the number of bachelor's degrees awarded in the Economics department is the largest of all majors examined, at 199 degrees awarded. This is in part a reflection of the high number of majors in the department each year regardless of dips or increases in degrees awarded, and does not necessarily reflect large-scale expansion of the major entirely.
+```
+
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+#install.packages("gridExtra")
+require(gridExtra)
+
+stat_plot<-ggplot(stat_degrees,aes(x=years,y=bachelors, group=1))+geom_point(color='dark blue')+geom_line(color='dark blue')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title='Statistics',x='Graduation Year',y="Bachelor's Awarded")+ylim(10,530)
+
+math_plot<-ggplot(math_degrees,aes(x=years,y=bachelors, group=1))+geom_point(color='dark blue')+geom_line(color='dark blue')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title='Mathematics',x='Graduation Year',y="Bachelor's Awarded")+ylim(10,530)
+
+cs_plot<-ggplot(cs_degrees,aes(x=years,y=bachelors, group=1))+geom_point(color='dark blue')+geom_line(color='dark blue')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title='CS (BS)',x='Graduation Year',y="Bachelor's Awarded")+ylim(10,530)
+
+cs_clas_plot<-ggplot(cs_college_degrees,aes(x=years,y=bachelors, group=1))+geom_point(color='dark blue')+geom_line(color='dark blue')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title='CS (BA)',x='Graduation Year',y="Bachelor's Awarded")+ylim(10,530)
+
+econ_plot<-ggplot(econ_degrees,aes(x=years,y=bachelors,group=1))+geom_point(color='dark blue')+geom_line(color='dark blue')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title='Economics',x='Graduation Year',y="Bachelor's Awarded")+ylim(10,530)
+
+grid.arrange(stat_plot,math_plot,cs_plot,cs_clas_plot,econ_plot, heights=c(8,8))
+```
+
+Figure 1: Number of Bachelor's Degrees Awarded per Department by Graduation Year
+
+In Figure 1 above, all five departments and their corresponding number of bachelor's degrees awarded for the years spanning 2013 through 2020 can be visualized side by side ("University Stats & Facts").  The growth of the Statistics department is clear when considering relative changes in the number of degrees awarded.  The Mathematics department showed little change while the Economics department experienced the most change (from approximately 300 to 500 degrees).  While the Computer Science departments increased from roughly 50 to 200 degrees awarded, the Statistics department reached the same ending total (approximately 200 degrees) by 2019-2020 even though it began with only 22 majors at the start of the 2012-2013 year.
+
+We observe that a large increase in the Statistics department occurred from the 2014-2015 graduation year to 2015-2016 (up to 93 majors). This reflects a 55% percent growth. Another large increase is observed from the 2017-2018 year to 2019-2020, after which there were a total of 203 majors.  The corresponding percent growth is approximately 107%. 
+
+In the Math department, a long-term increase was observed from 2013 through 2016. The number of bachelor's awarded grew from 87 to 117, a 34% increase. 
+Unlike the sustained growth observed in the Statistics department however, there was a large decrease from 2016 to 2017 when the number of degrees declined from 117 to 107 (approximately a 9% decrease) and from 2019 to 2020 when the number of degrees declined from 122 to 114 (approximately a 6% decrease).
+
+The Computer Science department within the School of Engineering also exhibited a decline in degrees awarded, similar to the Math department as examined above.  From 2015 through 2016, the number of degrees awarded fell from 124 to 106. 
+Other than that decline, the CS department has exhibited similar growth patterns as the Statistics department because of continual and consistent increases in bachelor's degrees awarded each year.
+
+Within the College of Arts and Sciences, the CS department experienced a small decline in the number of majors awarded from 2015 through 2016 when the number of degrees awarded decreased from 122 to 117. Despite this, the CS department in the CLAS
+shows similar, continued and consistent growth that matches the Statistics department's expansion patterns.
+
+The Economics department had overall growth during the time period examined, but experienced a large decline from 2016 through 2018 when the number of degrees decreased from 441 to 399. This decline reflected an approximately 9.5% dip in the number of majors.
+
+While all departments showed growth in the number of bachelor's degrees awarded for the years analyzed, the rise of the Statistics department to reach over 200 majors by 2019-2020 is most significant, especially when considering that it only began with 22 majors at the start of 2012-2013.
+
+
+
+```{r, echo=FALSE}
+##All majors visualized together
+
+#binding the years column with the number of degrees awarded (number of student majors) for each major
+total_df<-rbind(stat_degrees, math_degrees, cs_degrees, cs_college_degrees, econ_degrees)
+
+#visualizing all majors on the same plot
+ggplot(total_df,aes(x=years, y=bachelors, group=Department))+
+  geom_point(aes(color=Department))+
+  geom_line(aes(color=Department))+
+  labs(title="Number of Bachelor's Awarded from 2013-2020", x='Graduation Year', y="Number of Bachelor's Awarded")+theme_bw()+theme(axis.text.x=element_text(angle=90))
+```
+
+Figure 2: Number of Bachelor's Degrees Awarded by Graduation Year for all Departments
+
+There are two major conclusions that can be made thus far regarding bachelor's degrees totals for the departments included in this project. 
+The first is that the Statistics department as opposed to the other majors has no declines in degrees awarded, and reflects only increases for each yearly increment. This evidence points to the continued and consistent expansion of the department. This growth has not slowed, and the number of bachelor's degrees awarded in the 2020-2021 year totaled 241 degrees.
+The second conclusion involves the fact that the CS departments (especially the one in the CLAS offering a BA degree, labeled "CS_BA") have very similar growth patterns to the Statistics department, but as examined further along in this report have more faculty to accommodate such expansion. The similar growth patterns justify the need for more funding and hiring of faculty in the Statistics department, similar to what has already occurred in the CS departments.
+*Note: The graph begins at 2013 to reflect the significant increases in degrees awarded in the Statistics department that year. All majors are analyzed beginning at this same starting point, as it reflected significant growth for them as well.
+
+
+
+```{r, echo=FALSE}
+# Annual Percent Changes in Number of Bachelors Awarded 
+
+
+# #bachelors awarded (same data used previously)
+# bachelors_stats<-c(22,41,60,93,96,98,149,203)
+# bachelors_math<-c(87,98,110,117,107,108,122,114)
+# bachelors_cs<-c(78,83,124,106,139,140,174,187) #for the college of engineering computer science
+# bachelors_cs_clas<-c(58,99,122,117,133,177,205,250) #for the college of arts and science computer science
+# bachelors_econ<-c(312,375,386,441,425,399,485,511)
+# 
+# 
+# 
+# #magnitude percent changes (numerator is vector of differences; denominator is vector of denominators to divide by)
+# stat_percent_change<-data.frame(diff(bachelors_stats)/bachelors_stats[-length(bachelors_stats)]*100)
+# math_percent_change<-data.frame(diff(bachelors_math)/bachelors_math[-length(bachelors_math)]*100)
+# cs_eng_percent_change<-data.frame(diff(bachelors_cs)/bachelors_cs[-length(bachelors_cs)]*100)
+# cs_clas_percent_change<-data.frame(diff(bachelors_cs_clas)/bachelors_cs_clas[-length(bachelors_cs_clas)]*100)
+# econ_percent_change<-data.frame(diff(bachelors_econ)/bachelors_econ[-length(bachelors_econ)]*100)
+# all_change<-cbind(stat_percent_change,math_percent_change,cs_eng_percent_change,cs_clas_percent_change, econ_percent_change)
+# all_change 
+# 
+# 
+# 
+# The most direct measure of strain on a department, and thus justification of increased faculty size, can be attributed to percent changes in the majors awarded.  If a department consistently has high numbers of bachelors and majors, a small percent increase will place less stress on that department than if a department with smaller enrollment numbers doubles or triples its enrollment annually (large and positive percent change). For example, if the Economics department (historically large number of majors and faculty members) were to increase its bachelors degrees awarded, the strain on that department would be less than if the Statistics department (smaller number of bachelors, historically) were to double its degrees awarded, since the scope and faculty size dedicated to the Statistics department is small to begin with.
+# 
+# As observed in the data frame for all seven of the annual periods in question: 
+# 1)The Statistics department had all positive rates of bachelors awarded (whereas each of the other majors had at least one negative percent change).
+# 2)For four out of seven of the annual periods in question, the Statistics department had the greatest percent change value out of all departments analyzed.
+# 
+# These conclusions support the consistent and continued expansion of the Statistics department, and encourage the hiring of more faculty members to accommodate such growth.
+```
+
+
+# Growth of Statistics Classes at UVA (Class Growth)
+## Growth Amongst Specific Courses for Statistics Majors
+
+Class growth in the UVA Department of Statistics comes in many forms, consisting of enrollment increases in required courses as well as in electives.  Rising student enrollment in all of these courses has placed increased workload and strain on the department.  The classes chosen for this section are STAT 3110, STAT 3220, STAT 5120, STAT 3120, MATH 3100, MATH 3350, and MATH 3351, because they were required for students in different concentrations of the Interdisciplinary Statistics major ("Interdisciplinary Major in Applied Statistics").  Further analysis would also analyze enrollment increases in popular elective classes including STAT 3250, STAT 3080, STAT 4630, and STAT 4800.  Prerequisite courses including STAT 2020 and STAT 2120 are taken by at least 450 students each a semester, many from outside the department itself.  The high enrollment in these prerequisite classes is also evidence of the growing strain on the department.
+
+
+```{r, include=FALSE}
+###STAT 3110
+enrollment<-c(0,0,0,0,0,0,0,175)
+years<-c('2013','2014','2015','2016','2017','2018','2019','2020')
+Course<-c('STAT3110','STAT3110','STAT3110','STAT3110','STAT3110','STAT3110','STAT3110','STAT3110')
+stat_3110<-data.frame(years,enrollment,Course)
+stat_3110
+stat3110_plot<-ggplot(stat_3110,aes(x=years,y=enrollment,group=1))+geom_point(color='dark blue')+geom_line(color='dark blue')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title='STAT 3110',x='Graduation Year',y='Students Enrolled')+ylim(0,330)
+
+#stat3110_plot
+```
+
+
+
+```{r, include=FALSE}
+###STAT 3220
+enrollment<-c(116,0,0,0,148,179,253,295)
+years<-c('2013','2014','2015','2016','2017','2018','2019','2020')
+Course<-c('STAT3220','STAT3220','STAT3220','STAT3220','STAT3220','STAT3220','STAT3220','STAT3220')
+stat_3220<-data.frame(years,enrollment,Course)
+stat_3220
+stat3220_plot<-ggplot(stat_3220,aes(x=years,y=enrollment,group=1))+geom_point(color='dark blue')+geom_line(color='dark blue')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title='STAT 3220',x='Graduation Year',y='Students Enrolled')+ylim(0,330)
+
+#stat3220_plot
+```
+
+
+```{r, include=FALSE}
+###STAT 5120
+enrollment<-c(0,72,67,110,59,62,88,81)
+years<-c('2013','2014','2015','2016','2017','2018','2019','2020')
+Course<-c('STAT5120','STAT5120','STAT5120','STAT5120','STAT5120','STAT5120','STAT5120','STAT5120')
+stat_5120<-data.frame(years,enrollment,Course)
+stat_5120
+stat5120_plot<-ggplot(stat_5120,aes(x=years,y=enrollment,group=1))+geom_point(color='dark blue')+geom_line(color='dark blue')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title='STAT 5120',x='Graduation Year',y='Students Enrolled')+ylim(0,330)
+
+#stat5120_plot
+```
+
+
+
+```{r, include=FALSE}
+###STAT 3120
+enrollment<-c(111,107,183,208,174,205,242,277)
+years<-c('2013','2014','2015','2016','2017','2018','2019','2020')
+Course<-c('STAT3120','STAT3120','STAT3120','STAT3120','STAT3120','STAT3120','STAT3120','STAT3120')
+stat_3120<-data.frame(years,enrollment,Course)
+stat_3120
+stat3120_plot<-ggplot(stat_3120,aes(x=years,y=enrollment,group=1))+geom_point(color='dark blue')+geom_line(color='dark blue')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title='STAT 3120',x='Graduation Year',y='Students Enrolled')+ylim(0,330)
+
+#stat3120_plot
+```
+
+
+
+```{r, include=FALSE}
+###MATH 3100
+enrollment<-c(178,209,267,306,265,325,300,226)
+years<-c('2013','2014','2015','2016','2017','2018','2019','2020')
+Course<-c('MATH3100','MATH3100','MATH3100','MATH3100','MATH3100','MATH3100','MATH3100','MATH3100')
+math_3100<-data.frame(years,enrollment,Course)
+math_3100
+math3100_plot<-ggplot(math_3100,aes(x=years,y=enrollment,group=1))+geom_point(color='dark blue')+geom_line(color='dark blue')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title='MATH 3100',x='Graduation Year',y='Students Enrolled')+ylim(0,330)
+
+#math3100_plot
+
+```
+
+
+
+
+```{r, include=FALSE}
+###MATH 3350
+enrollment<-c(0,42,42,33,55,98,157,176)
+years<-c('2013','2014','2015','2016','2017','2018','2019','2020')
+Course<-c('MATH3350','MATH3350','MATH3350','MATH3350','MATH3350','MATH3350','MATH3350','MATH3350')
+math_3350<-data.frame(years,enrollment,Course)
+math_3350
+math3350_plot<-ggplot(math_3350,aes(x=years,y=enrollment,group=1))+geom_point(color='dark blue')+geom_line(color='dark blue')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title='MATH 3350',x='Graduation Year',y='Students Enrolled')+ylim(0,330)
+
+#math3350_plot
+```
+
+
+
+```{r, include=FALSE}
+###MATH 3351
+enrollment<-c(262,235,251,244,239,290,165,226)
+years<-c('2013','2014','2015','2016','2017','2018','2019','2020')
+Course<-c('MATH3351','MATH3351','MATH3351','MATH3351','MATH3351','MATH3351','MATH3351','MATH3351')
+math_3351<-data.frame(years,enrollment,Course)
+math_3351
+math3351_plot<-ggplot(math_3351,aes(x=years,y=enrollment,group=1))+geom_point(color='dark blue')+geom_line(color='dark blue')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title='MATH 3351',x='Graduation Year',y='Students Enrolled')+ylim(0,330)
+
+#math3351_plot
+```
+
+```{r, echo=FALSE}
+grid.arrange(stat3110_plot, stat3220_plot, stat5120_plot, stat3120_plot, math3100_plot, math3350_plot, math3351_plot, heights=c(8,8))
+
+```
+
+Figure 3: Student Enrollment in Required INTER-Statistics Major Courses by Graduation Year
+
+In Figure 3 above, the number of students enrolled in each of the seven required Statistics courses can be observed side by side for the years spanning 2013 through 2020.
+
+Either MATH 3100 or STAT 3110 can be used to fulfill the probability course for the Statistics major.  It can be observed that there was a decrease from about 300 to 226 students enrolled in MATH 3100 (2018 to 2020), which aligns with the emergence and rising popularity of STAT 3110 in the 2019 graduation year.  The decline of MATH 3100 is not solely responsible for the growth of STAT 3110 however, and thus is further evidence of the growth of the Statistics department as seen through specific courses.
+
+Either MATH 3350 or MATH 3351 can be used to satisfy the linear algebra component. As observed by the graph of MATH 3351 below, a steep decline in the number of enrolled students occurred from 2018 through 2019 (from 290 to 165 students, a 43% decrease). This decrease is matched with the rise in popularity of MATH 3350 over the same time period, when it increased from 98 to 157 students enrolled (60% increase).
+
+```{r, echo=FALSE}
+###All courses visualized together
+
+total_df<-rbind(stat_3110, stat_3220, stat_5120, stat_3120)
+
+#visualizing all courses on the same plot
+ggplot(total_df,aes(x=years, y=enrollment, group=Course))+
+  geom_point(aes(color=Course))+
+  geom_line(aes(color=Course))+
+  labs(title="Number of Students Enrolled from 2013-2020", x='Graduation Year ', y='Number of Students Enrolled')+theme_bw()+
+  theme(axis.text.x=element_text(angle=90))
+```
+
+Figure 4: Student Enrollment in Required INTER-Statistics Major Courses by Graduation Year 
+
+Now visualizing these required Statistics courses together in Figure 4, it can be seen that overall there is large-scale expansion and growth in the Statistics department from 2013 through 2020. Some classes, including STAT 3110, were not initially offered and have had consistently large enrollment since their first offering.  Others, including STAT 3120, have had sustained growth over time. Graduate and undergraduate mixed courses including STAT 5120 have stable enrollment numbers over time and did not experience large-scale declines because of the constant supply of students from both student degree programs.
+
+## Growth of Statistics Summer Courses
+
+Class growth for the UVA Statistics department is also evident in rising enrollment totals for summer classes.  In Table 1 below (Bloomfield, Lou), summer enrollment totals for the Statistics department are shown for the past 5 years.  In Summer 2017 there were only 19 students, and by Summer 2021 there were 132 students enrolled in Statistics courses.  This represents a 595% increase in enrollment.  One reason for the growth is that students in certain programs such as Commerce and Engineering can only take Statistics courses during the summer, due to the rigidity of their schedule during the academic year.  Thus, the summer Statistics courses have seen and will continue to experience growth in the coming years.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+#SUMMER SESSION PAST 5 YEARS 3000+ classes
+tab <- matrix(c(19, 26, 34, 41, 132), ncol=5, byrow=TRUE)
+colnames(tab) <- c(' Summer 2017 ',' Summer 2018 ',' Summer 2019 ',' Summer 2020 ',' Summer 2021 ')
+rownames(tab) <- c('Students Enrolled')
+tab <- as.table(tab)
+
+#install.packages("kableExtra")
+library(kableExtra)
+kbl(tab)
+
+```
+
+
+Table 1: Total Enrollment in Summer Statistics Courses (2017-2021)
+
+```{r, include=FALSE}
+
+## Class Growth of Introductory Courses for the Statistics Major
+# The following prerequisite classes are common across many Statistics major classes. They are considered as "Introductory Courses in Statistics."
+
+# ###STAT 1100
+# enrollment<-c(40,0,0,172,269,315,233,154)
+# years<-c('2012-2013','2013-2014','2014-2015','2015-2016','2016-2017','2017-2018','2018-2019','2019-2020')
+# course<-c('STAT1100','STAT1100','STAT1100','STAT1100','STAT1100','STAT1100','STAT1100','STAT1100')
+# stat_1100<-data.frame(years,enrollment,course)
+# stat_1100_plot<-ggplot(stat_1100,aes(x=years,y=enrollment,group=1))+geom_point()+geom_line(color='orange')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title='STAT 1100 Enrollment ',x='Year (2012-2020)',y='Students Enrolled')
+# stat_1100_plot
+
+```
+
+```{r, include=FALSE}
+# ###STAT 2020
+# enrollment<-c(0,0,380,529,641,637,627,670)
+# years<-c('2012-2013','2013-2014','2014-2015','2015-2016','2016-2017','2017-2018','2018-2019','2019-2020')
+# course<-c('STAT2020','STAT2020','STAT2020','STAT2020','STAT2020','STAT2020','STAT2020','STAT2020')
+# stat_2020<-data.frame(years,enrollment,course)
+# stat_2020_plot<-ggplot(stat_2020,aes(x=years,y=enrollment,group=1))+geom_point()+geom_line(color='orange')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title='STAT 2020 Enrollment ',x='Year (2012-2020)',y='Students Enrolled')
+# stat_2020_plot
+```
+
+```{r, include=FALSE}
+# ###STAT 2120
+# enrollment<-c(1030,1267,1194,946,1017,1049,969,976)
+# years<-c('2012-2013','2013-2014','2014-2015','2015-2016','2016-2017','2017-2018','2018-2019','2019-2020')
+# course<-c('STAT2120','STAT2120','STAT2120','STAT2120','STAT2120','STAT2120','STAT2120','STAT2120')
+# stat_2120<-data.frame(years,enrollment,course)
+# stat_2120_plot<-ggplot(stat_2120,aes(x=years,y=enrollment,group=1))+geom_point()+geom_line(color='orange')+theme_bw()+theme(axis.text.x=element_text(angle=90))+labs(title='STAT 2120 Enrollment ',x='Year (2012-2020)',y='Students Enrolled')
+# stat_2120_plot
+```
+
+```{r, include=FALSE}
+#grid.arrange(stat_1100_plot,stat_2020_plot,stat_2120_plot, heights=c(8,8))
+
+# Above, the student enrollment totals can be visualized side by side for each of the three Introductory Statistics Prerequisite courses, over the years from 2012 through 2020.
+```
+
+
+
+```{r, echo=FALSE}
+###All introductory statistics courses visualized together
+
+# total_df_intro<-rbind(stat_1100,stat_2020, stat_2120)
+# 
+# #visualizing all courses on the same plot
+# ggplot(total_df_intro,aes(x=years, y=enrollment, group=course))+
+#   geom_point(aes(color=course))+
+#   geom_line(aes(color=course))+
+#   labs(title="Number of Students Enrolled in Prerequisite Courses", x='Year (2012-2020)', y='Number of Students Enrolled')+
+#   theme(axis.text.x=element_text(angle=90))
+
+
+# All of the prerequisite statistics courses can be visualized together. The three courses often utilized for the introductory-level requirement are STAT 1100, STAT 2020, and STAT 2120.  It is evident that both STAT 2020 and STAT 1100 experienced large-scale growth over the time period examined. STAT 2020 increased from 0 students (when not offered) to 670 students by 2020. Meanwhile, STAT 1100 experienced a peak at 315 students in 2018 from its initial starting point at 40 students.  STAT 2120 enrollment increased by approximately 23% from 2012 to 2014, and remained steady from 2016 through 2020. 
+# The large increases in the enrollment in these prerequisite classes also provide evidence that the Statistics major is growing and thus justify the need for more faculty to accommodate such expansion.
+```
+
+
+# Student to Faculty Ratio Growth  
+
+Below in Figure 5, the "student to faculty ratio" is displayed for each of the four major departments analyzed, whereby the ratio as expressed on the y-axis is the "number of students per one faculty member" for that given graduation year and department.  This value was calculated through division of the number of students enrolled in the departmental courses that graduation year by the number of faculty teaching those classes.  More specifically, the "NStudentsEnrolledForGrade" variable from the data was used to calculate the number of students taking  courses that graduation year ("UVA Course Enrollment Data (2011-2021)"). Once the data was filtered to both fall and spring semesters for that given department and graduation year, "NStudentsEnrolledForGrade" was used to obtain the total number of students enrolled in those classes.  Lou's List was then used to obtain the count of faculty for those courses (Bloomfield, Lou).  
+This ratio is visualized from 2012 through 2020 for each of the departments. Figure 5 illustrates this ratio over time for each department individually, while Figure 6 shows all departments together.
+
+
+```{r, include=FALSE}
+library(dplyr)
+library(ggplot2)
+getwd()
+full_2011<-read.csv('fulldata.csv')
+stats<-full_2011[full_2011$Subject=='STAT',] #subsetting only to STAT courses
+#unique(stats$Catalog.Number)
+
+all2011<-stats %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2011 Fall' | Term.Desc=='2011 Spring') 
+sum(all2011$NStudentsEnrolledForGrade) #704 stats students in 2011
+#according to Lou's List, number of faculty members in 2011 for those classes is "12"
+#View(all2011)
+#unique(all2011$Catalog.Number)
+
+all2012<-stats %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2012 Fall' | Term.Desc=='2012 Spring') 
+sum(all2012$NStudentsEnrolledForGrade) #1299
+#according to Lou's List, number of faculty members in 2012 for those classes is "11"
+#unique(all2012$Catalog.Number)
+
+all2013<-stats %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2013 Fall' | Term.Desc=='2013 Spring') 
+sum(all2013$NStudentsEnrolledForGrade) #1465
+#according to Lou's List, number of faculty members in 2013 for those classes is "4"
+unique(all2013$Catalog.Number)
+
+all2014<-stats %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2014 Fall' | Term.Desc=='2014 Spring') 
+sum(all2014$NStudentsEnrolledForGrade) #1863
+#according to Lou's List, number of faculty members in 2014 for those classes is "17"
+
+all2015<-stats %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2015 Fall' | Term.Desc=='2015 Spring') 
+sum(all2015$NStudentsEnrolledForGrade) #2200
+#according to Lou's List, number of faculty members in 2015 for those classes is "20"
+
+all2016<-stats %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2016 Fall' | Term.Desc=='2016 Spring') 
+sum(all2016$NStudentsEnrolledForGrade) #2433
+#according to Lou's List, number of faculty members in 2016 for those classes is "22"
+
+all2017<-stats %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2017 Fall' | Term.Desc=='2017 Spring') 
+sum(all2017$NStudentsEnrolledForGrade) #2965
+#according to Lou's List, number of faculty members in 2017 for those classes is "16"
+
+all2018<-stats %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2018 Fall' | Term.Desc=='2018 Spring') 
+sum(all2018$NStudentsEnrolledForGrade) #3755
+#according to Lou's List, number of faculty members in 2018 for those classes is "16"
+
+all2019<-stats %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2019 Fall' | Term.Desc=='2019 Spring') 
+sum(all2019$NStudentsEnrolledForGrade) #4496
+#according to Lou's List, number of faculty members in 2019 for those classes is "20"
+
+all2020<-stats %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2020 Fall' | Term.Desc=='2020 Spring') 
+sum(all2020$NStudentsEnrolledForGrade) #4924
+#according to Lou's List, number of faculty members in 2020 for those classes is "17"
+
+all2021<-stats %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2021 Fall' | Term.Desc=='2021 Spring') 
+sum(all2021$NStudentsEnrolledForGrade) #5283
+#according to Lou's List, number of faculty members in 2021 for those classes is "18"
+
+years<-c('2012','2013','2014','2015','2016','2017','2018','2019','2020')
+stof_ratio<-c(1299/11,1465/6,1863/16,2200/20,2433/22,2965/16,3755/16,4496/20,4924/17)
+Course<-c("STAT","STAT","STAT","STAT","STAT","STAT","STAT","STAT","STAT")
+sf_frame1<-data.frame(years,stof_ratio,Course)
+stat_Plot<-ggplot(sf_frame1,aes(x=years,y=stof_ratio,group=1))+geom_point(color='dark blue')+geom_line(color='dark blue')+labs(x='Graduation Year', y='Student to Faculty Ratio',title='STAT Department')+ylim(0,400)+theme_bw()+
+  theme(axis.text.x=element_text(angle=90))
+
+#stat_Plot
+#ggplot(sf_frame, aes(x=stof_ratio))+geom_bar() #frequency of certain s:f ratios
+#2011 data: 704/12, 2021 data: 5283/18
+```
+
+
+
+```{r, include=FALSE}
+library(dplyr)
+library(ggplot2)
+#getwd()
+full_2011<-read.csv('fulldata.csv')
+math<-full_2011[full_2011$Subject=='MATH',] #subsetting only to MATH courses
+#head(math,6)
+#unique(stats$Catalog.Number)
+
+all2011<-math %>%
+  group_by(Term.Desc) %>% #group by 20XX Fall/Spring
+  filter(Term.Desc=='2011 Fall' | Term.Desc=='2011 Spring')  #only filter to certain term/year
+sum(all2011$NStudentsEnrolledForGrade) #2146
+#according to Lou's List, number of faculty members in 2011 for those classes is "63"
+#all2011$Catalog.Number
+#View(all2011)
+
+all2012<-math %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2012 Fall' | Term.Desc=='2012 Spring')
+
+sum(all2012$NStudentsEnrolledForGrade) #3780
+#according to Lou's List, number of faculty members in 2012 for those classes is "81"
+#all2012$Catalog.Number
+#View(all2012)
+
+all2013<-math %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2013 Fall' | Term.Desc=='2013 Spring')
+sum(all2013$NStudentsEnrolledForGrade) #3881
+#according to Lou's List, number of faculty members in 2013 for those classes is "84"
+
+all2014<-math %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2014 Fall' | Term.Desc=='2014 Spring')
+sum(all2014$NStudentsEnrolledForGrade) #4026-17=4009 (one class not in Lous)
+#according to Lou's List, number of faculty members in 2014 for those classes is "84"
+
+all2015<-math %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2015 Fall' | Term.Desc=='2015 Spring')
+sum(all2015$NStudentsEnrolledForGrade) #4190
+#according to Lou's List, number of faculty members in 2015 for those classes is "80"
+
+all2016<-math %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2016 Fall' | Term.Desc=='2016 Spring')
+sum(all2016$NStudentsEnrolledForGrade) #4492-54=4438 (Lou's mising a class)
+#according to Lou's List, number of faculty members in 2016 for those classes is "75"
+
+all2017<-math %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2017 Fall' | Term.Desc=='2017 Spring')
+sum(all2017$NStudentsEnrolledForGrade) #4333
+#according to Lou's List, number of faculty members in 2017 for those classes is "92"
+
+all2018<-math %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2018 Fall' | Term.Desc=='2018 Spring')
+sum(all2018$NStudentsEnrolledForGrade) #4353 
+#according to Lou's List, number of faculty members in 2018 for those classes is "89"
+
+all2019<-math %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2019 Fall' | Term.Desc=='2019 Spring')
+sum(all2019$NStudentsEnrolledForGrade) #4032
+#according to Lou's List, number of faculty members in 2019 for those classes is "86"
+
+all2020<-math %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2020 Fall' | Term.Desc=='2020 Spring')
+sum(all2020$NStudentsEnrolledForGrade) #3909
+#according to Lou's List, number of faculty members in 2020 for those classes is "81"
+
+all2021<-math %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2021 Fall' | Term.Desc=='2021 Spring')
+sum(all2021$NStudentsEnrolledForGrade) #3681
+#according to Lou's List, number of faculty members in 2021 for those classes is "82"
+
+years<-c('2012','2013','2014','2015','2016','2017','2018','2019','2020')
+stof_ratio<-c(3780/81,3881/84,4009/84,4190/80,4438/75,4333/92,4353/89,4032/86,3909/81)
+Course<-c("MATH","MATH","MATH","MATH","MATH","MATH","MATH","MATH","MATH")
+sf_frame2<-data.frame(years,stof_ratio,Course)
+math_Plot<-ggplot(sf_frame2,aes(x=years,y=stof_ratio,group=1))+geom_point(color='dark blue')+geom_line(color='dark blue')+labs(x='Graduation Year', y='Student to Faculty Ratio',title='MATH Department')+ylim(0,400)+theme_bw()+
+  theme(axis.text.x=element_text(angle=90))
+
+#math_Plot
+#ggplot(sf_frame, aes(x=stof_ratio))+geom_bar() 
+#2011 data: 2146/63, 2021 data: ,3681/82
+```
+
+
+```{r, include=FALSE}
+## CS Classes Collectively (between the CLAS and the School of Engineering and Applied Sciences)
+library(dplyr)
+library(ggplot2)
+#getwd()
+full_2011<-read.csv('fulldata.csv') #all data since 2011
+cs<-full_2011[full_2011$Subject.Desc=='Computer Science',] #subsetting only to CS courses
+
+all2011<-cs %>%
+  group_by(Term.Desc) %>% #group by 20XX Fall/Spring
+  filter(Term.Desc=='2011 Fall' | Term.Desc=='2011 Spring')  #only filter to certain term/year
+sum(all2011$NStudentsEnrolledForGrade) #3572 students in 2011
+#according to Lou's List, number of faculty members in 2011 for those classes is "27"
+
+
+all2012<-cs %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2012 Fall' | Term.Desc=='2012 Spring')
+
+sum(all2012$NStudentsEnrolledForGrade) #4269
+#according to Lou's List, number of faculty members in 2012 for those classes is "26"
+#all2012$Catalog.Number
+#View(all2012)
+
+all2013<-cs %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2013 Fall' | Term.Desc=='2013 Spring')
+sum(all2013$NStudentsEnrolledForGrade) #5152
+#according to Lou's List, number of faculty members in 2013 for those classes is "32"
+
+all2014<-cs %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2014 Fall' | Term.Desc=='2014 Spring')
+sum(all2014$NStudentsEnrolledForGrade) #5615
+#according to Lou's List, number of faculty members in 2014 for those classes is "31"
+
+all2015<-cs %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2015 Fall' | Term.Desc=='2015 Spring')
+sum(all2015$NStudentsEnrolledForGrade) #6332
+#according to Lou's List, number of faculty members in 2015 for those classes is "34"
+
+all2016<-cs %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2016 Fall' | Term.Desc=='2016 Spring')
+sum(all2016$NStudentsEnrolledForGrade) #7056
+#according to Lou's List, number of faculty members in 2016 for those classes is "32"
+
+all2017<-cs %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2017 Fall' | Term.Desc=='2017 Spring')
+sum(all2017$NStudentsEnrolledForGrade) #7889
+#according to Lou's List, number of faculty members in 2017 for those classes is "42"
+
+all2018<-cs %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2018 Fall' | Term.Desc=='2018 Spring')
+sum(all2018$NStudentsEnrolledForGrade) #9253 
+#according to Lou's List, number of faculty members in 2018 for those classes is "52"
+
+all2019<-cs %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2019 Fall' | Term.Desc=='2019 Spring')
+sum(all2019$NStudentsEnrolledForGrade) #9982-12=9970 (Lou's didn't have the class)
+#according to Lou's List, number of faculty members in 2019 for those classes is "40"
+
+all2020<-cs %>% 
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2020 Fall' | Term.Desc=='2020 Spring')
+sum(all2020$NStudentsEnrolledForGrade) #10471
+#according to Lou's List, number of faculty members in 2020 for those classes is "53"
+
+all2021<-cs %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2021 Fall' | Term.Desc=='2021 Spring')
+sum(all2021$NStudentsEnrolledForGrade) #10213
+#according to Lou's List, number of faculty members in 2021 for those classes is "65"
+
+years<-c('2012','2013','2014','2015','2016','2017','2018','2019', '2020')
+stof_ratio<-c(4269/26,5152/32,5615/31,6332/34,7056/32,7889/42,9253/52,9970/40,10471/53)
+Course<-c("CS (BS&BA)","CS (BS&BA)","CS (BS&BA)","CS (BS&BA)","CS (BS&BA)","CS (BS&BA)","CS (BS&BA)","CS (BS&BA)","CS (BS&BA)")
+sf_frame3<-data.frame(years,stof_ratio,Course)
+cs_Plot<-ggplot(sf_frame3,aes(x=years,y=stof_ratio,group=1))+geom_point(color='dark blue')+geom_line(color='dark blue')+labs(x='Graduation Year', y='Student to Faculty Ratio',title='CS Department')+ylim(0,400)+theme_bw()+
+  theme(axis.text.x=element_text(angle=90))
+
+#cs_Plot
+
+#2011 data: 3572/27, 2021 data: ,10213/65
+```
+
+
+```{r, include=FALSE}
+library(dplyr)
+library(ggplot2)
+#getwd()
+full_2011<-read.csv('fulldata.csv') #all data since 2011
+econ<-full_2011[full_2011$Subject.Desc=='Economics',] #subsetting only to ECON courses
+#unique(econ$Subject) #(CHECKING WHETHER DF ONLY CONTAINS ECON COURSES)
+
+all2011<-econ %>%
+  group_by(Term.Desc) %>% #group by 20XX Fall/Spring
+  filter(Term.Desc=='2011 Fall' | Term.Desc=='2011 Spring')  #only filter to certain term/year
+sum(all2011$NStudentsEnrolledForGrade) #3376 students in 2011
+#according to Lou's List, number of faculty members in 2011 for those classes is "56"
+
+
+all2012<-econ %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2012 Fall' | Term.Desc=='2012 Spring')
+
+sum(all2012$NStudentsEnrolledForGrade) #6409
+#according to Lou's List, number of faculty members in 2012 for those classes is "86"
+#all2012$Catalog.Number
+#View(all2012)
+
+all2013<-econ %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2013 Fall' | Term.Desc=='2013 Spring')
+sum(all2013$NStudentsEnrolledForGrade) #6642
+#according to Lou's List, number of faculty members in 2013 for those classes is "97"
+
+all2014<-econ %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2014 Fall' | Term.Desc=='2014 Spring')
+sum(all2014$NStudentsEnrolledForGrade) #6792
+#according to Lou's List, number of faculty members in 2014 for those classes is "106"
+
+all2015<-econ %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2015 Fall' | Term.Desc=='2015 Spring')
+sum(all2015$NStudentsEnrolledForGrade) #6936
+#according to Lou's List, number of faculty members in 2015 for those classes is "110"
+
+all2016<-econ %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2016 Fall' | Term.Desc=='2016 Spring')
+sum(all2016$NStudentsEnrolledForGrade) #7269
+#according to Lou's List, number of faculty members in 2016 for those classes is "118"
+
+all2017<-econ %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2017 Fall' | Term.Desc=='2017 Spring')
+sum(all2017$NStudentsEnrolledForGrade) #7310
+#according to Lou's List, number of faculty members in 2017 for those classes is "134"
+
+all2018<-econ %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2018 Fall' | Term.Desc=='2018 Spring')
+sum(all2018$NStudentsEnrolledForGrade) #6955 
+#according to Lou's List, number of faculty members in 2018 for those classes is "124"
+
+all2019<-econ %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2019 Fall' | Term.Desc=='2019 Spring')
+sum(all2019$NStudentsEnrolledForGrade) #7213
+#according to Lou's List, number of faculty members in 2019 for those classes is "133"
+
+all2020<-econ %>% 
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2020 Fall' | Term.Desc=='2020 Spring')
+sum(all2020$NStudentsEnrolledForGrade) #7331
+#according to Lou's List, number of faculty members in 2020 for those classes is "141"
+
+all2021<-econ %>%
+  group_by(Term.Desc) %>%
+  filter(Term.Desc=='2021 Fall' | Term.Desc=='2021 Spring')
+sum(all2021$NStudentsEnrolledForGrade) #6624
+#according to Lou's List, number of faculty members in 2021 for those classes is "145"
+
+years<-c('2012','2013','2014','2015','2016','2017','2018','2019', '2020')
+stof_ratio<-c(6409/86,6642/97,6792/106,6936/110,7269/118,7310/134,6955/124,7213/133,7331/141)
+Course<-c("ECON","ECON","ECON","ECON","ECON","ECON","ECON","ECON","ECON")
+sf_frame4<-data.frame(years,stof_ratio,Course)
+#head(sf_frame4)
+econ_Plot<-ggplot(sf_frame4,aes(x=years,y=stof_ratio,group=1))+geom_point(color='dark blue')+geom_line(color='dark blue')+labs(x='Graduation Year', y='Student to Faculty Ratio',title='ECON Department')+ylim(0,400)+theme_bw()+
+  theme(axis.text.x=element_text(angle=90))
+
+#econ_Plot
+#2011 data: 3376/56, 2021 data: ,6624/145
+```
+
+```{r, echo=FALSE}
+grid.arrange(stat_Plot,math_Plot,cs_Plot,econ_Plot, heights=c(8,8))
+```
+
+Figure 5: Student to Faculty Ratio for Each Department by Graduation Year
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+#install.packages('plyr')
+library(plyr)
+all_sfr<-rbind(sf_frame1,sf_frame2,sf_frame3,sf_frame4)
+
+#visualizing all departments on the same plot
+ggplot(all_sfr,aes(x=years, y=stof_ratio, group=Course))+
+  geom_point(aes(color=Course))+
+  geom_line(aes(color=Course))+
+  labs(title="Student to Faculty Ratios from 2012-2020", x='Graduation Year', y='Number of Students Per Faculty Member')+
+  theme(axis.text.x=element_text(angle=90))+theme_bw()
+```
+
+Figure 6: Student to Faculty Ratio for Each Department by Graduation Year
+
+The key pattern at the core of Figure 6 concerns whether the ratio of students to faculty members increases or decreases over time.  If this value increased over time, that would indicate that student growth in that department outpaced faculty hiring.  Either the number of students taking those classes increased, or the number of teaching faculty members decreased. In contrast, if the ratio decreased over time, then either faculty hiring was increased to accommodate the student growth in that given department, or the number of students enrolled in the classes decreased.
+
+As observed, the Statistics department and the Computer Science department (includes both the BA and BS degree programs) exhibited the largest overall growth in the number of students to faculty ratio for the years analyzed, indicating that student growth has outpaced faculty hiring.  The Economics and Math departments showed a general decrease and constant state, respectively, from 2012 through 2020, indicating that ample faculty were hired based upon student enrollment.  This is particularly noteworthy when considering departments such as Economics, which have some of the largest totals of students at UVA but also have increased hiring to compensate for such large enrollment sizes.  
+These visualizations show that while the Math and Economics departments maintain a relatively constant ratio from year to year, departments such as Statistics and Computer Science have more variability, specifically in the form of increases, in their ratios.
+
+When further comparing the STAT and CS departments, one can note that the STAT department exceeded the ratio of 200 students per 1 faculty member for four out of the 9 years analyzed while the CS department only exceeded that ratio twice (2016 and 2019).  Additionally, it can be observed that the STAT department showed the largest growth of any department analyzed from 2016 onward.  This reflects the recent, large explosion of Statistics, Analytics, and Data Sciences as fields of interest for many students today.
+
+The rising student to faculty ratio for the Department of Statistics from 2012 to present, especially when compared to similar departments, is evidence of its significant expansion over the past decade.
+
+
+# Conclusions  
+
+In conclusion, considering factors as number of bachelor's degrees awarded, class and enrollment sizes, and the student to faculty ratio for several major STEM-related departments at the University of Virginia over time, the immense growth of the Statistics department is clear.  While other departments including Economics and Computer Science have also sustained increasing enrollment totals over time, the number of faculty members is boosted regularly to accommodate for such changes.
+
+Considering the increases in the student to faculty ratio specifically, increased hiring for the  department is justifiable.  While the number of majors in the Statistics department has grown steadily, the number of faculty members has not increased to match growth in enrollment.  An increased student to faculty ratio is not necessarily a negative attribute, but the Statistics department is perhaps one of the closest to the threshold at which this ratio presents substantial strain on a department. 
+
+It is our hope that this visual and quantitative presentation of degree, enrollment, and student to faculty ratio data will illustrate that the growth of the Statistics department at the university must be adequately matched with a growth in resources, particularly faculty size.
+ 
+
+
+# Works Cited:
+1. Bloomfield, Lou. “UVA Class Schedules.” UVa Class Schedules (Unofficial, Lou’s List v2.10), https://louslist.org/.
+
+2. Institutional Research and Analytics UVA. “UVA Course Enrollment Data (2011-2021).”
+
+3. “Interdisciplinary Major in Applied Statistics.” Interdisciplinary Major in Applied Statistics | Department of Statistics, U.Va.,
+https://statistics.as.virginia.edu/interdisciplinary-major-applied-statistics.
+
+4. “University Stats & Facts.” University Stats & Facts | Institutional Research and Analytics, U.Va., Rector and Visitors of the University of Virginia, https://ira.virginia.edu/university-stats-facts.
+
+5. UVA Department of Statistics, https://statistics.as.virginia.edu/contact-us. Accessed 27 Mar. 2022.
+
+6. Wickham et al., (2019). Welcome to the tidyverse. Journal of Open Source Software, 4(43), 1686, https://doi.org/10.21105/joss.01686
+
+
+
+
